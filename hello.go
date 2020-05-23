@@ -1,11 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"strings"
+	"syscall"
+)
+
+var (
+	info   []string
+	system map[string]string
 )
 
 func main() {
-
-	fmt.Println("rrm.003\nmachine:Windows10")
-	fmt.Scanln()
+	info = syscall.Environ()
+	var key string
+	system := make(map[string]string)
+	for i := range info {
+		rslt := strings.Split(info[i], "=")
+		if rslt[0] != "" || rslt[1] != "" {
+			key = rslt[0]
+			system[key] = rslt[1]
+		}
+	}
 }
