@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"strings"
 	"syscall"
 )
@@ -11,6 +13,12 @@ var (
 )
 
 func main() {
+	args := os.Args[:]
+	if len(args) < 2 {
+		fmt.Println("Use cmd : hello help ")
+		os.Exit(1)
+	}
+
 	info = syscall.Environ()
 	var key string
 	system := make(map[string]string)
@@ -21,4 +29,22 @@ func main() {
 			system[key] = rslt[1]
 		}
 	}
+	temp := args[1:]
+	for inp := range temp[:] {
+
+		if temp[inp] == "help" {
+			fmt.Println("Try hello <input>\nInput :  ")
+			for i := range system {
+				fmt.Println("\thello ", i)
+			}
+			os.Exit(0)
+		}
+		if system[temp[inp]] == "" {
+			fmt.Println("Invalid Command\nTry hello help")
+			os.Exit(0)
+		}
+		fmt.Println(temp[inp], " : ", system[temp[inp]])
+		//fmt.Println(temp[inp])
+	}
+	//fmt.Println("...exiting program!")
 }
