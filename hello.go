@@ -16,7 +16,7 @@ func main() {
 	args := os.Args[:]
 	if len(args) < 2 {
 		fmt.Println("Use cmd : hello help ")
-		os.Exit(1)
+		os.Exit(0)
 	}
 
 	info = syscall.Environ()
